@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestor de Contraseñas Local</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0e0e11">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+  <main>
+
+    <!-- Pantalla de Login inicio -->
+    <section id="login-section">
+      <h2>App de seguridad local</h2>
+      <form id="login-form">
+        <div class="password-field-wrapper">
+          <input type="email" id="login-email" placeholder="Tu correo electrónico" required />
+        </div>
+        <div class="password-field-wrapper">
+          <input type="password" id="master-password" placeholder="Contraseña maestra" required>
+          <button type="button" class="toggle-password" data-target="master-password" aria-label="Mostrar/Ocultar contraseña">👁️</button>
+        </div>
+        
+        <button type="submit">Acceder</button>
+
+        <!-- Nuevas acciones login inicio -->
+        <div class="login-actions">
+          <button type="button" id="forgot-password-btn">¿Olvidaste tu contraseña?</button>
+          <button type="button" id="register-btn">Registrarse</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Pantalla de Gestión de Contraseñas -->
+    <section id="passwords-section" class="dashboard" style="display: none;">
+      <header class="dashboard-header">
+        <h1>Gestión de Contraseñas</h1>
+        <button id="logout-btn" style="display: none;">Cerrar sesión</button>
+      </header>
+
+      <div class="dashboard-container">
+        <!-- Columna izquierda -->
+        <div id="passwords-column">
+          <h2>Tus Contraseñas</h2>
+          <button id="add-password-btn">Agregar contraseña</button>
+          <input type="text" id="search-passwords" placeholder="Buscar contraseña..." />
+
+          <div id="passwords-list">
+            <!-- Aquí se listarán las contraseñas -->
+          </div>
+
+          <form id="new-password-form" style="display: none;">
+            <input type="text" id="site" placeholder="Sitio web" required>
+            <input type="text" id="username" placeholder="Usuario" required>
+            <div class="password-field-wrapper">
+              <input type="password" id="password" placeholder="Contraseña" required>
+              <button type="button" class="toggle-password" data-target="password" aria-label="Mostrar/Ocultar contraseña">👁️</button>
+            </div>
+            <button type="submit">Guardar</button>
+          </form>
+        </div>
+
+        <!-- Columna derecha -->
+        <div id="change-password-column">
+          <h2>Cambiar contraseña maestra</h2>
+          <form id="change-master-form">
+            <div class="password-field-wrapper">
+              <input type="password" id="current-master" placeholder="Contraseña actual" required>
+              <button type="button" class="toggle-password" data-target="current-master" aria-label="Mostrar/Ocultar contraseña">👁️</button>
+            </div>
+            <div class="password-field-wrapper">
+              <input type="password" id="new-master" placeholder="Nueva contraseña" required>
+              <button type="button" class="toggle-password" data-target="new-master" aria-label="Mostrar/Ocultar contraseña">👁️</button>
+            </div>
+            <button type="submit">Actualizar</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal de confirmación -->
+  <div class="modal-principal" id="modal-confirmation" style="display: none;">
+    <div class="modal-p">
+      <button class="modal-close" onclick="cerrarModal('modal-confirmation')">✖</button>
+      <h2>¡Contraseña actualizada!</h2>
+      <p>Tu contraseña maestra se ha actualizado correctamente.</p>
+    </div>
+  </div>
+
+  <!-- Modal de recuperación -->
+  <div class="modal" id="modal-recuperar" style="display: none;">
+    <div class="modal-content">
+      <button class="modal-close" onclick="cerrarModal('modal-recuperar')">✖</button>
+      <h2>Recuperar Contraseña</h2>
+      <p>Ingresa tu correo electrónico para recibir un enlace de recuperación.</p>
+      <form id="form-recuperar">
+        <input type="email" id="recovery-email" placeholder="Correo electrónico" required>
+        <button type="submit">Enviar enlace</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de registro -->
+  <div class="modal" id="modal-registro" style="display: none;">
+    <div class="modal-content">
+      <button class="modal-close" onclick="cerrarModal('modal-registro')">✖</button>
+      <h2>Registrar nueva cuenta</h2>
+      <form id="register-form">
+        <input type="text" id="register-username" placeholder="Nombre de usuario" required>
+        <input type="password" id="register-password" placeholder="Crear contraseña" required>
+        <input type="password" id="registre-password-conf" placeholder="Confirma contraseña" required>
+        <input type="email" id="register-email" placeholder="Correo electrónico" required>
+        <button type="submit">Guardar</button>
+      </form>
+    </div>
+  </div>
+  
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js")
+          .then(reg => console.log("Service Worker registrado:", reg))
+          .catch(err => console.error("Error al registrar el Service Worker:", err));
+      });
+    }
+  </script>
+  <div id="toastWelcome" class="toast-login"></div>
+  <canvas id="universe"></canvas>
+  <script src="script.js" defer></script>
+
+  <footer id="footer">
+    <p>App local segura - by master Hr-Speed</p>
+  </footer>
+</body>
+</html>

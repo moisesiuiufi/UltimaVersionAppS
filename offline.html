@@ -1,0 +1,127 @@
+  <!DOCTYPE html>
+  <html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sin conexión</title>
+    <style>
+      :root {
+        --bg: #121212;
+        --fg: #f5f5f5;
+        --subtle: #999;
+        --accent: #4f46e5;
+        --accent-hover: #4338ca;
+        --radius: 12px;
+      }
+
+      * {
+        box-sizing: border-box;
+        font-family: "Segoe UI", sans-serif;
+      }
+
+      body {
+        margin: 0;
+        padding: 2rem;
+        background: var(--bg);
+        color: var(--fg);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        text-align: center;
+      }
+
+      .container {
+        background: #1e1e1e;
+        padding: 2rem;
+        border-radius: var(--radius);
+        box-shadow: 0 0 15px #00000066;
+        max-width: 400px;
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        font-size: 1rem;
+        color: var(--subtle);
+        margin-bottom: 2rem;
+      }
+
+      .spinner {
+        margin: 1rem auto 2rem;
+        width: 28px;
+        height: 28px;
+        border: 4px solid #ffffff33;
+        border-top-color: var(--fg);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      button {
+        background-color: var(--accent);
+        color: white;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      button:hover {
+        background-color: var(--accent-hover);
+        transform: scale(1.03);
+      }
+
+      .status {
+        margin-top: 1rem;
+        font-size: 0.9rem;
+        color: var(--subtle);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Estás sin conexión</h1>
+      <p>No pudimos cargar la app. Revisa tu conexión a Internet.</p>
+      <div class="spinner"></div>
+      <button onclick="retry()">Reintentar conexión</button>
+      <div class="status" id="status">Reintentando en 3 segundos...</div>
+    </div>
+
+    <script>
+      let countdown = 3;
+      const statusEl = document.getElementById("status");
+
+      function retry() {
+        statusEl.textContent = "Intentando recargar...";
+        location.reload();
+      }
+
+      function autoRetry() {
+        const interval = setInterval(() => {
+          countdown--;
+          if (countdown > 0) {
+            statusEl.textContent = `Reintentando en ${countdown} segundos...`;
+          } else {
+            clearInterval(interval);
+            retry();
+          }
+        }, 1000);
+      }
+
+      autoRetry();
+    </script>
+  </body>
+  </html>
