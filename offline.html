@@ -120,6 +120,11 @@
           }
         }, 1000);
       }
+      
+      window.addEventListener('online', () => {
+  statusEl.textContent = 'Conexión restablecida, recargando...';
+  setTimeout(() => location.reload(), 1500);
+});
 
       autoRetry();
     </script>

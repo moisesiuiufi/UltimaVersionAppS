@@ -1,0 +1,49 @@
+<!-- recovery.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Recuperar contraseña</title>
+  <link rel="stylesheet" href="recovery.css"/>
+</head>
+<body>
+  <h2>Recupera tu contraseña</h2>
+  <form id="form-reset">
+    <input type="hidden" id="username" />
+    <input type="password" id="new-password" placeholder="Nueva contraseña" required />
+    <input type="password" id="confirm-password" placeholder="Confirmar contraseña" required />
+    <button type="submit">Restablecer</button>
+  </form>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const username = params.get("user");
+    document.getElementById("username").value = username;
+
+    document.getElementById("form-reset").addEventListener("submit", async e => {
+      e.preventDefault();
+      const newPass = document.getElementById("new-password").value;
+      const confirm = document.getElementById("confirm-password").value;
+
+      if (newPass !== confirm) {
+        alert("Las contraseñas no coinciden");
+        return;
+      }
+
+      const res = await fetch("/api/reset-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, newPassword: newPass })
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert("Contraseña restablecida correctamente");
+        window.location.href = "/";
+      } else {
+        alert(data.message || "Error al restablecer la contraseña");
+      }
+    });
+  </script>
+</body>
+</html>

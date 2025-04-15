@@ -86,7 +86,7 @@
   <!-- Modal de confirmación -->
   <div class="modal-principal" id="modal-confirmation" style="display: none;">
     <div class="modal-p">
-      <button class="modal-close" onclick="cerrarModal('modal-confirmation')">✖</button>
+      <button type="button" class="modal-close" onclick="cerrarModal('modal-confirmation')">✖</button>
       <h2>¡Contraseña actualizada!</h2>
       <p>Tu contraseña maestra se ha actualizado correctamente.</p>
     </div>
@@ -95,7 +95,7 @@
   <!-- Modal de recuperación -->
   <div class="modal" id="modal-recuperar" style="display: none;">
     <div class="modal-content">
-      <button class="modal-close" onclick="cerrarModal('modal-recuperar')">✖</button>
+      <button type="button" class="modal-close" onclick="cerrarModal('modal-recuperar')">✖</button>
       <h2>Recuperar Contraseña</h2>
       <p>Ingresa tu correo electrónico para recibir un enlace de recuperación.</p>
       <form id="form-recuperar">
@@ -108,7 +108,7 @@
   <!-- Modal de registro -->
   <div class="modal" id="modal-registro" style="display: none;">
     <div class="modal-content">
-      <button class="modal-close" onclick="cerrarModal('modal-registro')">✖</button>
+      <button type="button" class="modal-close" onclick="cerrarModal('modal-registro')">✖</button>
       <h2>Registrar nueva cuenta</h2>
       <form id="register-form">
         <input type="text" id="register-username" placeholder="Nombre de usuario" required>
